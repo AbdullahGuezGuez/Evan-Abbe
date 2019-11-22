@@ -68,4 +68,17 @@ submit(): void {
 }
 
 
+
+
+saveFile(){
+  var ws =  xlsx.utils.json_to_sheet(this.excel3);
+
+  var wb = xlsx.utils.book_new();
+
+  xlsx.utils.book_append_sheet(wb, ws, "Projects");
+  
+
+  xlsx.writeFile(wb, "sheetjs.xlsx");
+}
+
 }
