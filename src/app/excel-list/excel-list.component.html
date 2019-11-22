@@ -5,20 +5,24 @@
         (change)="changeListener($event)" class="btn btn-info mb-4 mt-2">   
         <input type="file"
         id="file2"
-        (change)="changeListener($event)" class="btn btn-info mb-4 mt-2">   
+        (change)="changeListener($event)" class="btn btn-info mb-4 mt-2"> 
+        
+        <button (click)="submit()">Submit</button>
 
 <table class="table table-striped table-bordered table-hover">    
  <tr>    
-   <th>Name</th>    
-   <th>Month</th>    
-   <th>Sales</th>    
-   <th>Percentage</th>    
+   <th>Nr</th>    
+   <th>Kund</th>
+   <th>Prosect namn</th> 
+   <th>Beskrivning</th>        
+   <th>Kontakt</th>    
  </tr>    
- <tr *ngFor="let item of excel">    
+ <tr *ngFor="let item of excel3">    
    <td>{{item.Nr}}</td>    
-   <td>{{item.Kund}}</td>    
-   <td>{{item.kontakt}}</td>    
-   <td>{{item.Kund}}</td>    
+   <td>{{item.Kund}}</td> 
+   <td>{{item.Beskrivning}}</td>       
+   <td>{{item['Prospect namn']}}</td>       
+   <td>{{item.Kontakt}}</td>    
  </tr>    
 </table>    
 </div>   

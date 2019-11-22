@@ -12,7 +12,9 @@ export class ExcelListComponent implements OnInit {
   
   title = 'Sååågeti excel calculator';
   fileToUpload: File = null;
-  excel: any[];  
+  excel1: any[];  
+  excel2: any[];
+  excel3: any[];
 
   ngOnInit() {
   }
@@ -35,15 +37,35 @@ export class ExcelListComponent implements OnInit {
       var worksheet = wb.Sheets["Prospect att bemanna"];
 
      var worksheetJson = xlsx.utils.sheet_to_json(worksheet);
-     console.log(worksheetJson);
-     this.excel = worksheetJson;
-    }
 
 
-   // var workbook = xlsx.readFile(this.fileToUpload.name);
-
+     if(inputValue.id == "file"){
+      this.excel1 = worksheetJson;
+     }
+     if(inputValue.id == "file2"){
+      this.excel2 = worksheetJson;
+     }
     
   
+     
+    }
 }
+submit(): void {
+  var json = []; 
+  for(var y in this.excel2){
+    var contains = false;
+    for(var x in this.excel1){
+      if(this.excel2[y].Nr == this.excel1[x].Nr){
+        contains = true;
+        break;
+      }
+    }
+    if(contains == false){
+      json.push(this.excel2[y])
+    }
+  }
+  this.excel3 = json;
+}
+
 
 }
