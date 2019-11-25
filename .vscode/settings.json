@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/324265c6-0746-4bb7-9c39-f09ad43808fc/resourceGroups/Excel-rg/providers/Microsoft.Web/sites/ExcelApp-1337",
+    "appService.deploySubpath": "dist"
+}

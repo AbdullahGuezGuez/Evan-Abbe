@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import * as xlsx from 'xlsx'; 
+import * as xlsx from 'xlsx';
 
 
 @Component({
@@ -9,20 +9,20 @@ import * as xlsx from 'xlsx';
   styleUrls: ['./excel-list.component.css']
 })
 export class ExcelListComponent implements OnInit {
-  
+
   title = 'Sååågeti excel calculator';
   fileToUpload: File = null;
-  excel1: any[];  
+  excel1: any[];
   excel2: any[];
   excel3: any[];
 
   ngOnInit() {
   }
 
-  constructor(){  
+  constructor() {
 
-  }  
-  
+  }
+
   changeListener($event): void {
     this.handleFileInput($event.target);
   }
@@ -30,55 +30,53 @@ export class ExcelListComponent implements OnInit {
     var file: File = inputValue.files[0];
     var reader: FileReader = new FileReader();
     reader.readAsArrayBuffer(file);
-    reader.onloadend =  (e) =>{
+    reader.onloadend = (e) => {
       var buffer = reader.result;
       var bytes = new Uint8Array(<ArrayBuffer>buffer);
-      var wb = xlsx.read(bytes, {type:'array'});
+      var wb = xlsx.read(bytes, { type: 'array' });
       var worksheet = wb.Sheets["Prospect att bemanna"];
+      console.log(worksheet);
+      var worksheetJson = xlsx.utils.sheet_to_json(worksheet);
+      console.log(worksheetJson);
 
-     var worksheetJson = xlsx.utils.sheet_to_json(worksheet);
-
-
-     if(inputValue.id == "file"){
-      this.excel1 = worksheetJson;
-     }
-     if(inputValue.id == "file2"){
-      this.excel2 = worksheetJson;
-     }
-    
-  
-     
-    }
-}
-submit(): void {
-  var json = []; 
-  for(var y in this.excel2){
-    var contains = false;
-    for(var x in this.excel1){
-      if(this.excel2[y].Nr == this.excel1[x].Nr){
-        contains = true;
-        break;
+      if (inputValue.id == "file") {
+        this.excel1 = worksheetJson;
       }
-    }
-    if(contains == false){
-      json.push(this.excel2[y])
+      if (inputValue.id == "file2") {
+        this.excel2 = worksheetJson;
+      }
+
     }
   }
-  this.excel3 = json;
-}
+  submit(): void {
+    var json = [];
+    for (var y in this.excel2) {
+      var contains = false;
+      for (var x in this.excel1) {
+        if (this.excel2[y].Nr == this.excel1[x].Nr) {
+          contains = true;
+          break;
+        }
+      }
+      if (contains == false) {
+        json.push(this.excel2[y])
+      }
+    }
+    this.excel3 = json;
+  }
 
 
 
 
-saveFile(){
-  var ws =  xlsx.utils.json_to_sheet(this.excel3);
+  saveFile() {
+    var ws = xlsx.utils.json_to_sheet(this.excel3);
 
-  var wb = xlsx.utils.book_new();
+    var wb = xlsx.utils.book_new();
 
-  xlsx.utils.book_append_sheet(wb, ws, "Projects");
-  
+    xlsx.utils.book_append_sheet(wb, ws, "Projects");
 
-  xlsx.writeFile(wb, "sheetjs.xlsx");
-}
+
+    xlsx.writeFile(wb, "sheetjs.xlsx");
+  }
 
 }
